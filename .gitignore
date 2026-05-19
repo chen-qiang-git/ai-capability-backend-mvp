@@ -1,0 +1,9 @@
+/target/
+/.idea/
+*.iml
+*.log
+/.vscode/
+/tooling/node_modules/
+/tooling/package-lock.json
+/app.log
+/app-error.log

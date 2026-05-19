@@ -1,0 +1,15 @@
+﻿{
+    "success":  true,
+    "data":  {
+                 "summary":  "Spring Boot helps teams build APIs quickly. It includes auto-configuration and starter dependencies.",
+                 "sentenceCount":  2,
+                 "keywords":  [
+                                  "apis",
+                                  "auto",
+                                  "boot",
+                                  "build",
+                                  "configuration"
+                              ]
+             },
+    "traceId":  "3de938db-d85e-4217-ac05-62f8e4b8dcef"
+}

@@ -1,0 +1,12 @@
+﻿{
+    "success":  true,
+    "data":  {
+                 "answer":  "Based on the provided material, the most relevant answer is: The project provides text summary and document QA endpoints.",
+                 "evidence":  [
+                                  "The project provides text summary and document QA endpoints.",
+                                  "It also includes logging, validation, and exception handling."
+                              ],
+                 "confidence":  "high"
+             },
+    "traceId":  "8aff384c-ef17-45ed-9e51-df4b569c09fa"
+}
