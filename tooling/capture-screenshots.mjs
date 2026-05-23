@@ -17,4 +17,14 @@ await page.screenshot({ path: path.join(docsDir, "api-test-screenshot-summary.pn
 await page.goto(pathToFileURL(path.join(docsDir, "qa-response.html")).href, { waitUntil: "load" });
 await page.screenshot({ path: path.join(docsDir, "api-test-screenshot-qa.png"), fullPage: true });
 
+const extraPages = [
+  ["mvnw-test-log.html", "run-test-screenshot-mvnw-test.png"],
+  ["docker-run-log.html", "run-test-screenshot-docker.png"]
+];
+
+for (const [htmlName, imageName] of extraPages) {
+  await page.goto(pathToFileURL(path.join(docsDir, htmlName)).href, { waitUntil: "load" });
+  await page.screenshot({ path: path.join(docsDir, imageName), fullPage: true });
+}
+
 await browser.close();

@@ -1,0 +1,9 @@
+.git
+target
+tooling/node_modules
+tooling/package-lock.json
+app.log
+app-error.log
+docs/*.png
+docs/*.html
+docs/*.json

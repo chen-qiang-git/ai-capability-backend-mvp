@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html><head><meta charset='utf-8'><title>Docker Run</title><style>body{font-family:Consolas,monospace;background:#0f172a;color:#e2e8f0;padding:24px}h1,h2{font-family:Segoe UI,sans-serif}pre{background:#111827;padding:20px;border-radius:8px;white-space:pre-wrap;word-break:break-word;border:1px solid #334155}</style></head><body><h1>Docker Build and Run</h1><h2>Commands</h2><pre>docker build -t ai-capability-backend-mvp .
+docker run --rm -p 8080:8080 ai-capability-backend-mvp</pre><h2>Build Result</h2><pre>#18 naming to docker.io/library/ai-capability-backend-mvp:latest done
+#18 DONE 2.0s</pre><h2>Container Log</h2><pre>Tomcat started on port 8080 (http) with context path '/'
+Started AiCapabilityBackendApplication in container successfully</pre><h2>Summary API Response</h2><pre>{
+    "success":  true,
+    "data":  {
+                 "summary":  "Spring Boot helps teams build APIs quickly. It includes auto-configuration and starter dependencies.",
+                 "sentenceCount":  2,
+                 "keywords":  [
+                                  "apis",
+                                  "auto",
+                                  "boot",
+                                  "build",
+                                  "configuration"
+                              ]
+             },
+    "traceId":  "604148ab-7c59-427d-9283-ae0af6e725a2"
+}
+</pre><h2>QA API Response</h2><pre>{
+    "success":  true,
+    "data":  {
+                 "answer":  "Based on the provided material, the most relevant answer is: The project provides text summary and document QA endpoints.",
+                 "evidence":  [
+                                  "The project provides text summary and document QA endpoints.",
+                                  "It also includes logging, validation, and exception handling."
+                              ],
+                 "confidence":  "high"
+             },
+    "traceId":  "748a1ea2-a008-4c4b-8cc8-b51e040cb64e"
+}
+</pre></body></html>

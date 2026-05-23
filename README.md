@@ -1,81 +1,125 @@
 # AI Capability Backend MVP
 
-一个面向面试题的 Spring Boot 后端 MVP，提供两个“AI 能力”接口：
+Spring Boot backend MVP for the interview task. It provides two AI-style APIs with structured JSON output:
 
-- 文本摘要：`POST /api/v1/ai/summary`
-- 资料问答：`POST /api/v1/ai/qa`
+- `POST /api/v1/ai/summary` for text summarization
+- `POST /api/v1/ai/qa` for document question answering
 
-项目强调可运行、可演示、可解释，包含结构化 JSON 返回、统一异常处理、请求链路日志、Swagger 文档、接口测试和交付说明。
+The project includes:
 
-## 1. 技术栈
+- structured API response model
+- request validation
+- global exception handling
+- request trace logging
+- Swagger/OpenAPI docs
+- controller integration tests
+- runnable local and Docker instructions
+- API test examples and screenshots
+
+## 1. Tech Stack
 
 - Java 17
 - Spring Boot 3.3.5
-- Spring Web
-- Spring Validation
-- springdoc OpenAPI / Swagger UI
+- Maven / Maven Wrapper
+- Swagger UI via springdoc
 - JUnit 5 + MockMvc
+- Docker
 
-## 2. 项目结构
+## 2. Project Structure
 
 ```text
 .
-├── docs
-│   ├── api-test-requests.md
-│   ├── api-test-screenshot-swagger.png
-│   ├── api-test-screenshot-summary.png
-│   ├── api-test-screenshot-qa.png
-│   ├── ai-collaboration.md
-│   └── debugging-record.md
-├── src
-│   ├── main
-│   │   ├── java/com/example/aibackend
-│   │   │   ├── api
-│   │   │   ├── config
-│   │   │   ├── exception
-│   │   │   └── service
-│   │   └── resources/application.yml
-│   └── test/java/com/example/aibackend/AiControllerTest.java
-├── pom.xml
-└── README.md
+|-- .mvn/
+|-- docs/
+|-- src/
+|-- .dockerignore
+|-- .gitignore
+|-- Dockerfile
+|-- mvnw
+|-- mvnw.cmd
+|-- pom.xml
+`-- README.md
 ```
 
-## 3. 运行方式
+## 3. Quick Start
 
-### 3.1 启动项目
+### Option A: Run with Maven Wrapper
 
-推荐方式：
+This is the recommended way for reviewers because it does not rely on a preinstalled Maven version.
+
+#### Windows
+
+```powershell
+.\mvnw.cmd clean test
+.\mvnw.cmd clean package
+java -jar target\ai-capability-backend-0.0.1-SNAPSHOT.jar
+```
+
+#### macOS / Linux
 
 ```bash
-mvn clean package
+chmod +x mvnw
+./mvnw clean test
+./mvnw clean package
 java -jar target/ai-capability-backend-0.0.1-SNAPSHOT.jar
 ```
 
-启动后访问：
+After startup:
 
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 
-也可以尝试：
+### Option B: Run with Docker
+
+Build image:
 
 ```bash
-mvn spring-boot:run
+docker build -t ai-capability-backend-mvp .
 ```
 
-但在当前中文目录环境下，`spring-boot:run` 可能出现类加载异常，因此这里将 `java -jar` 作为更稳妥的演示方式。
-
-### 3.2 运行测试
+Run container:
 
 ```bash
-mvn test
+docker run --rm -p 8080:8080 ai-capability-backend-mvp
 ```
 
-## 4. 接口说明
+After startup:
 
-### 4.1 文本摘要
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+
+## 4. Build and Test Notes
+
+### Minimum environment
+
+- Java 17
+- network access to download Maven dependencies the first time
+
+### Verified commands
+
+Local test:
+
+```bash
+./mvnw clean test
+```
+
+Local package:
+
+```bash
+./mvnw clean package
+```
+
+Docker build:
+
+```bash
+docker build -t ai-capability-backend-mvp .
+```
+
+## 5. API Endpoints
+
+### 5.1 Summary API
 
 `POST /api/v1/ai/summary`
 
-请求示例：
+Request:
 
 ```json
 {
@@ -84,7 +128,7 @@ mvn test
 }
 ```
 
-返回示例：
+Response:
 
 ```json
 {
@@ -92,17 +136,23 @@ mvn test
   "data": {
     "summary": "Spring Boot helps teams build APIs quickly. It includes auto-configuration and starter dependencies.",
     "sentenceCount": 2,
-    "keywords": ["api", "auto", "boot", "build", "configuration"]
+    "keywords": [
+      "apis",
+      "auto",
+      "boot",
+      "build",
+      "configuration"
+    ]
   },
-  "traceId": "..."
+  "traceId": "3de938db-d85e-4217-ac05-62f8e4b8dcef"
 }
 ```
 
-### 4.2 资料问答
+### 5.2 QA API
 
 `POST /api/v1/ai/qa`
 
-请求示例：
+Request:
 
 ```json
 {
@@ -111,7 +161,7 @@ mvn test
 }
 ```
 
-返回示例：
+Response:
 
 ```json
 {
@@ -124,36 +174,73 @@ mvn test
     ],
     "confidence": "high"
   },
-  "traceId": "..."
+  "traceId": "8aff384c-ef17-45ed-9e51-df4b569c09fa"
 }
 ```
 
-## 5. 工程特性
+## 6. API Test Samples
 
-- 统一返回结构：`ApiResponse<T>`
-- 统一异常处理：`GlobalExceptionHandler`
-- 参数校验：`jakarta.validation`
-- 请求日志与链路 ID：`RequestTraceFilter`
-- Swagger 文档：便于面试演示
+### cURL examples
 
-## 6. 交付材料
+Summary:
 
-- 核心目录：当前项目根目录
-- README：本文件
-- 接口测试截图：
-  - [Swagger 截图](C:/Users/Administrator/Desktop/AI面试/docs/api-test-screenshot-swagger.png)
-  - [Summary 响应截图](C:/Users/Administrator/Desktop/AI面试/docs/api-test-screenshot-summary.png)
-  - [QA 响应截图](C:/Users/Administrator/Desktop/AI面试/docs/api-test-screenshot-qa.png)
-- AI 协作说明：见 [ai-collaboration.md](C:/Users/Administrator/Desktop/AI面试/docs/ai-collaboration.md)
-- 真实排错记录：见 [debugging-record.md](C:/Users/Administrator/Desktop/AI面试/docs/debugging-record.md)
+```bash
+curl -X POST "http://localhost:8080/api/v1/ai/summary" \
+  -H "Content-Type: application/json" \
+  -d "{\"text\":\"Spring Boot helps teams build APIs quickly. It includes auto-configuration and starter dependencies. This MVP focuses on interview delivery.\",\"maxSentences\":2}"
+```
 
-## 7. 验证结果
+QA:
 
-- `mvn test`：通过，3/3 成功
-- 本地接口联调：已完成
-- Swagger 页面：已生成截图
-- 请求日志：已在 `app.log` 中验证
+```bash
+curl -X POST "http://localhost:8080/api/v1/ai/qa" \
+  -H "Content-Type: application/json" \
+  -d "{\"document\":\"The project provides text summary and document QA endpoints. It also includes logging, validation, and exception handling. Swagger UI is enabled for demo.\",\"question\":\"Which AI capabilities does the project provide?\"}"
+```
 
-## 8. 说明
+Windows PowerShell examples are also listed in [docs/api-test-requests.md](docs/api-test-requests.md).
 
-这里的“AI 能力”MVP 采用规则增强的轻量实现，目的是在不依赖外部模型密钥的情况下，完整展示后端接口设计、工程结构、错误处理、日志和可测试性。如果后续技术沟通需要，我可以继续把它升级为接入大模型 API 的版本。
+## 7. Runtime and Test Artifacts
+
+- [Swagger screenshot](docs/api-test-screenshot-swagger.png)
+- [Summary response screenshot](docs/api-test-screenshot-summary.png)
+- [QA response screenshot](docs/api-test-screenshot-qa.png)
+- [Maven wrapper test screenshot](docs/run-test-screenshot-mvnw-test.png)
+- [Docker run screenshot](docs/run-test-screenshot-docker.png)
+
+Raw sample responses:
+
+- [summary-response.json](docs/summary-response.json)
+- [qa-response.json](docs/qa-response.json)
+- [docker-summary-response.json](docs/docker-summary-response.json)
+- [docker-qa-response.json](docs/docker-qa-response.json)
+
+## 8. Engineering Notes
+
+- Unified response structure via `ApiResponse<T>`
+- Global error handling via `GlobalExceptionHandler`
+- Request trace ID logging via `RequestTraceFilter`
+- Swagger UI for quick manual verification
+- Local controller tests via `MockMvc`
+
+## 9. Additional Delivery Files
+
+- [AI collaboration note](docs/ai-collaboration.md)
+- [Debugging record](docs/debugging-record.md)
+
+## 10. Reviewer Shortcut
+
+If you want the fastest verification path:
+
+```bash
+./mvnw clean test
+./mvnw clean package
+java -jar target/ai-capability-backend-0.0.1-SNAPSHOT.jar
+```
+
+Or:
+
+```bash
+docker build -t ai-capability-backend-mvp .
+docker run --rm -p 8080:8080 ai-capability-backend-mvp
+```
