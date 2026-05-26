@@ -41,11 +41,55 @@ The project includes:
 `-- README.md
 ```
 
-## 3. Quick Start
+## 3. Stable Reproduction Path
+
+For a clean environment, use one of these two paths only:
+
+### Path A: JDK 17 + Maven Wrapper
+
+Use this if the machine has JDK 17 and `javac`. The wrapper now stores its Maven distribution in project-local `.mvn-home/`, so it does not depend on a writable user home cache.
+
+#### Minimal verification
+
+```powershell
+java -version
+javac -version
+.\mvnw.cmd clean test
+```
+
+If `javac` is missing, the machine is pointing to a JRE instead of a JDK and the build will fail.
+
+#### Full build and run
+
+```powershell
+.\mvnw.cmd -DskipTests clean package
+java -jar target\ai-capability-backend-0.0.1-SNAPSHOT.jar
+```
+
+### Path B: Docker
+
+Use this if the host Maven chain is not reliable.
+
+#### Minimal verification
+
+```bash
+docker build --progress=plain -t ai-capability-backend-mvp .
+```
+
+#### Full build and run
+
+```bash
+docker build --progress=plain -t ai-capability-backend-mvp .
+docker run --rm -p 8080:8080 ai-capability-backend-mvp
+```
+
+Detailed rerun notes are in [docs/reproducible-build.md](docs/reproducible-build.md).
+
+## 4. Quick Start
 
 ### Option A: Run with Maven Wrapper
 
-This is the recommended way for reviewers because it does not rely on a preinstalled Maven version.
+This is the recommended local path because it does not rely on a preinstalled Maven version and it keeps Maven files inside the repository workspace.
 
 #### Windows
 
@@ -86,12 +130,13 @@ After startup:
 
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 
-## 4. Build and Test Notes
+## 5. Build and Test Notes
 
 ### Minimum environment
 
 - Java 17
 - network access to download Maven dependencies the first time
+- for local builds, `javac` must be available
 
 ### Verified commands
 
@@ -113,9 +158,9 @@ Docker build:
 docker build -t ai-capability-backend-mvp .
 ```
 
-## 5. API Endpoints
+## 6. API Endpoints
 
-### 5.1 Summary API
+### 6.1 Summary API
 
 `POST /api/v1/ai/summary`
 
@@ -148,7 +193,7 @@ Response:
 }
 ```
 
-### 5.2 QA API
+### 6.2 QA API
 
 `POST /api/v1/ai/qa`
 
@@ -178,7 +223,7 @@ Response:
 }
 ```
 
-## 6. API Test Samples
+## 7. API Test Samples
 
 ### cURL examples
 
@@ -200,13 +245,16 @@ curl -X POST "http://localhost:8080/api/v1/ai/qa" \
 
 Windows PowerShell examples are also listed in [docs/api-test-requests.md](docs/api-test-requests.md).
 
-## 7. Runtime and Test Artifacts
+## 8. Runtime and Test Artifacts
 
 - [Swagger screenshot](docs/api-test-screenshot-swagger.png)
 - [Summary response screenshot](docs/api-test-screenshot-summary.png)
 - [QA response screenshot](docs/api-test-screenshot-qa.png)
 - [Maven wrapper test screenshot](docs/run-test-screenshot-mvnw-test.png)
 - [Docker run screenshot](docs/run-test-screenshot-docker.png)
+- [JDK17 build success log](docs/jdk17-build-success.log)
+- [Docker build success log](docs/docker-build-success.log)
+- [Docker run success log](docs/docker-run-success.log)
 
 Raw sample responses:
 
@@ -215,7 +263,7 @@ Raw sample responses:
 - [docker-summary-response.json](docs/docker-summary-response.json)
 - [docker-qa-response.json](docs/docker-qa-response.json)
 
-## 8. Engineering Notes
+## 9. Engineering Notes
 
 - Unified response structure via `ApiResponse<T>`
 - Global error handling via `GlobalExceptionHandler`
@@ -223,12 +271,12 @@ Raw sample responses:
 - Swagger UI for quick manual verification
 - Local controller tests via `MockMvc`
 
-## 9. Additional Delivery Files
+## 10. Additional Delivery Files
 
 - [AI collaboration note](docs/ai-collaboration.md)
 - [Debugging record](docs/debugging-record.md)
 
-## 10. Reviewer Shortcut
+## 11. Reviewer Shortcut
 
 If you want the fastest verification path:
 

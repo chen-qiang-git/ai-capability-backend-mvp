@@ -79,7 +79,7 @@ if ($env:MVNW_REPOURL) {
 $distributionUrlName = $distributionUrl -replace '^.*/',''
 $distributionUrlNameMain = $distributionUrlName -replace '\.[^.]*$','' -replace '-bin$',''
 
-$MAVEN_M2_PATH = "$HOME/.m2"
+$MAVEN_M2_PATH = "$scriptDir/.mvn-home"
 if ($env:MAVEN_USER_HOME) {
   $MAVEN_M2_PATH = "$env:MAVEN_USER_HOME"
 }
@@ -88,11 +88,22 @@ if (-not (Test-Path -Path $MAVEN_M2_PATH)) {
     New-Item -Path $MAVEN_M2_PATH -ItemType Directory | Out-Null
 }
 
-$MAVEN_WRAPPER_DISTS = $null
-if ((Get-Item $MAVEN_M2_PATH).Target[0] -eq $null) {
-  $MAVEN_WRAPPER_DISTS = "$MAVEN_M2_PATH/wrapper/dists"
+$MAVEN_M2_ITEM = Get-Item $MAVEN_M2_PATH
+$MAVEN_M2_TARGET = $null
+if ($null -ne $MAVEN_M2_ITEM.Target) {
+  if ($MAVEN_M2_ITEM.Target -is [System.Array]) {
+    if ($MAVEN_M2_ITEM.Target.Length -gt 0) {
+      $MAVEN_M2_TARGET = $MAVEN_M2_ITEM.Target[0]
+    }
+  } else {
+    $MAVEN_M2_TARGET = $MAVEN_M2_ITEM.Target
+  }
+}
+
+$MAVEN_WRAPPER_DISTS = if ([string]::IsNullOrWhiteSpace($MAVEN_M2_TARGET)) {
+  "$MAVEN_M2_PATH/wrapper/dists"
 } else {
-  $MAVEN_WRAPPER_DISTS = (Get-Item $MAVEN_M2_PATH).Target[0] + "/wrapper/dists"
+  "$MAVEN_M2_TARGET/wrapper/dists"
 }
 
 $MAVEN_HOME_PARENT = "$MAVEN_WRAPPER_DISTS/$distributionUrlNameMain"

@@ -7,3 +7,6 @@
 /tooling/package-lock.json
 /app.log
 /app-error.log
+/.docker-local/
+/.mvn-home/
+/.m2repo/
