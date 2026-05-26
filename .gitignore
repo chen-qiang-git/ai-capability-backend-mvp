@@ -10,3 +10,6 @@
 /.docker-local/
 /.mvn-home/
 /.m2repo/
+!docs/jdk17-build-success.log
+!docs/docker-build-success.log
+!docs/docker-run-success.log

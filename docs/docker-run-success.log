@@ -1,0 +1,19 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-05-26 08:08:05.664 INFO  [main] [] com.example.aibackend.AiCapabilityBackendApplication - Starting AiCapabilityBackendApplication v0.0.1-SNAPSHOT using Java 17.0.19 with PID 1 (/app/app.jar started by root in /app)
+2026-05-26 08:08:05.669 INFO  [main] [] com.example.aibackend.AiCapabilityBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-05-26 08:08:07.511 INFO  [main] [] org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-05-26 08:08:07.539 INFO  [main] [] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-26 08:08:07.539 INFO  [main] [] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2026-05-26 08:08:07.636 INFO  [main] [] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-05-26 08:08:07.637 INFO  [main] [] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1891 ms
+2026-05-26 08:08:09.264 INFO  [main] [] org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-05-26 08:08:09.320 INFO  [main] [] com.example.aibackend.AiCapabilityBackendApplication - Started AiCapabilityBackendApplication in 4.429 seconds (process running for 5.173)
